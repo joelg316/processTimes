@@ -10,11 +10,11 @@ input = ["2022-08-23T08:00:00.0000000", "2022-08-25T11:00:00.0000000", "2022-08-
          "2022-08-29T12:00:00.0000000", "2022-08-29T16:00:00.0000000", "2022-08-31T15:30:00.0000000"]
 
 # overall result using above input times:
-# Tuesday 08/23 08:00AM - 12:00PM CST
-# Thursday 08/25 11:00AM - 03:00PM CST
-# Friday 08/26 12:00PM - 03:00PM CST
-# Monday 08/29 08:00AM - 04:00PM CST
-# Wednesday 08/31 12:00PM - 03:00PM CST
+# Tuesday 08/23 08:00AM - 12:00PM
+# Thursday 08/25 11:00AM - 03:00PM
+# Friday 08/26 12:00PM - 03:00PM
+# Monday 08/29 08:00AM - 04:00PM
+# Wednesday 08/31 12:00PM - 03:00PM
 
 
 # sort times chronologically
@@ -88,6 +88,6 @@ for x, y in zip(input[0::2], input[1::2]):
     b = datetime.strptime(y, '%Y-%m-%dT%H:%M:%S.0000000')
     # format list with human readable day of the week, month/day, and times plus time zone
     # dt.strftime("%A %m/%d %I:%M%p %Z")
-    output.append(a.strftime("%A %m/%d %I:%M%p") + ' - ' + b.strftime("%I:%M%p CST"))
+    output.append(a.strftime("%A %m/%d %I:%M%p") + ' - ' + b.strftime("%I:%M%p"))
 
 print '\n'.join(output)
