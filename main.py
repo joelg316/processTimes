@@ -1,8 +1,7 @@
 # A script to process and format available meeting times in Outlook
-# Version 1.0 8/21/22
+# Version 1.0 8/22/22
 
 from datetime import datetime, timedelta
-import re
 
 # input data is retrieved from Power Automate "Get meeting times" cloud flow via HTTP request
 input = ["2022-08-23T08:00:00.0000000", "2022-08-25T11:00:00.0000000", "2022-08-26T11:30:00.0000000",
@@ -54,9 +53,10 @@ def shrinkby30(times):
     # add 30 min to start times
     for i, e in enumerate(times[0::2]):  # check every two elements in list starting with first element
         if ":30" in e:
-            dt = datetime.strptime(e, '%Y-%m-%dT%H:%M:%S.0000000')
+            dt = datetime.strptime(e, '%Y-%m-%dT%H:%M:%S.0000000')   # convert string to datetime
             dt = dt + timedelta(minutes=30)  # add 30 min
-            times[i * 2] = dt.strftime('%Y-%m-%dT%H:%M:%S.0000000')
+            # multiply i * 2 because enumerate only got every other element from times so it's half as long
+            times[i * 2] = dt.strftime('%Y-%m-%dT%H:%M:%S.0000000')  # format dt as string again
             print times[i * 2]
 
     # subtract 30 min from end times
@@ -64,6 +64,7 @@ def shrinkby30(times):
         if ":30" in e:
             dt = datetime.strptime(e, '%Y-%m-%dT%H:%M:%S.0000000')
             dt = dt - timedelta(minutes=30)  # subtract 30 min
+            # multiply i * 2 + 1 bc enumerate got every other element from times starting with position 1 not 0
             times[i * 2 + 1] = dt.strftime('%Y-%m-%dT%H:%M:%S.0000000')
             print times[i * 2 + 1]
 
