@@ -1,5 +1,5 @@
 # A script to process and format available meeting times in Outlook
-# Joel Ginsberg 8/21/22
+# Version 1.0 8/21/22
 
 from datetime import datetime, timedelta
 import re
