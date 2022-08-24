@@ -88,7 +88,7 @@ for x, y in zip(input[0::2], input[1::2]):
     b = datetime.strptime(y, '%Y-%m-%dT%H:%M:%S.0000000')
     # format list with human readable day of the week, month/day, and times plus time zone
     # dt.strftime("%A %m/%d %I:%M%p %Z")
-    output.append(a.strftime("%a %m/%d %I:%M%p").replace(' 0', '  ').replace('/0', '/ ') + ' - ' + b.strftime(
-        "%I:%M%p CST").lstrip('0'))
+    output.append(a.strftime("%a %m/%d %I:%M").replace(' 0', '  ').replace('/0', '/ ') + ' - ' + b.strftime(
+        "%I:%M CST").lstrip('0'))
 
 print '\n'.join(output)
