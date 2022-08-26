@@ -10,11 +10,11 @@ input = ["2022-08-23T08:00:00.0000000", "2022-08-25T11:00:00.0000000", "2022-08-
          "2022-08-29T12:00:00.0000000", "2022-08-29T16:00:00.0000000", "2022-08-31T15:30:00.0000000"]
 
 # overall result using above input times:
-# Tuesday 08/23 08:00AM - 12:00PM CST
-# Thursday 08/25 11:00AM - 03:00PM CST
-# Friday 08/26 12:00PM - 03:00PM CST
-# Monday 08/29 08:00AM - 04:00PM CST
-# Wednesday 08/31 12:00PM - 03:00PM CST
+# 8/23:  8 - 12 CST
+# 8/25: 11 - 3 CST
+# 8/26: 12 - 3 CST
+# 8/29:  8 - 4 CST
+# 8/31: 12 - 3 CST
 
 
 # sort times chronologically
@@ -28,7 +28,6 @@ input.sort()
 # we have to call the function recursively until all consecutive meeting blocks have been combined
 # all consecutive meeting blocks have been combined if the function runs and does not remove any elements from the list
 def combineTimes(times):
-
     # get initial length of times list to compare to length after running this function
     # this is how we check if we can stop calling the function recursively
     beforeLength = len(times)
@@ -37,7 +36,7 @@ def combineTimes(times):
         # avoid error on last element
         if i < (len(times) - 1):
             # check if current datetime is the same as the next one
-            #print input[i], input[i+1]
+            # print input[i], input[i+1]
             if times[i] == times[i + 1]:
                 # after the first pop the next element [i+1] becomes the current one [i]
                 # we want to remove both duplicates
@@ -51,8 +50,11 @@ def combineTimes(times):
         # return is necessary to store result of recursive function call, otherwise first function call returns None
         return combineTimes(times)  # call function again until all consecutive times have been combined
 
+
 input = combineTimes(input)
-#print input
+
+
+# print input
 
 
 # Change :30 times to :00. To avoid conflict with other meetings, add 30 min to start times and subtract 30 from end times
@@ -61,7 +63,7 @@ def shrinkby30(times):
     # add 30 min to start times
     for i, e in enumerate(times[0::2]):  # check every two elements in list starting with first element
         if ":30" in e:
-            dt = datetime.strptime(e, '%Y-%m-%dT%H:%M:%S.0000000')   # convert string to datetime
+            dt = datetime.strptime(e, '%Y-%m-%dT%H:%M:%S.0000000')  # convert string to datetime
             dt = dt + timedelta(minutes=30)  # add 30 min
             # multiply i * 2 because enumerate only got every other element from times so it's half as long
             times[i * 2] = dt.strftime('%Y-%m-%dT%H:%M:%S.0000000')  # format dt as string again
@@ -76,8 +78,8 @@ def shrinkby30(times):
 
     return times
 
-input = shrinkby30(input)
 
+input = shrinkby30(input)
 
 # Combine every two items in array with ' - ' so we can show time span like 8 - 4 pm
 # https://stackoverflow.com/questions/24443995/list-comprehension-joining-every-two-elements-together-in-a-list
@@ -88,7 +90,6 @@ for x, y in zip(input[0::2], input[1::2]):
     b = datetime.strptime(y, '%Y-%m-%dT%H:%M:%S.0000000')
     # format list with human readable day of the week, month/day, and times plus time zone
     # dt.strftime("%A %m/%d %I:%M%p %Z")
-    output.append(a.strftime("%a %m/%d").replace(' 0', ' ').replace('/0', '/') + a.strftime(" %I:%M").replace(' 0', ' ').replace('/0', '/').rjust(6,' ') + ' - ' + b.strftime(
-        "%I:%M CST").lstrip('0'))
+    output.append(a.strftime("%m/%d:").lstrip('0').replace('/0', '/') + a.strftime(" %I").replace(' 0', ' ').rjust(3, ' ') + ' - ' + b.strftime("%I CST").lstrip('0'))
 
 print '\n'.join(output)
