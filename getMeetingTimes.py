@@ -20,11 +20,11 @@ from datetime import datetime, timedelta
 # 8/31: 12 - 3 CST
 
 # Settings to query power automate cloud flow HTTP listener URL
-cloud_url = 'https://prod-34.westus.logic.azure.com:443/workflows/0b0f0bd35618401f86477a7a830f1dac/triggers/manual/paths/invoke?api-version=2016-06-01&sp=/triggers/manual/run&sv=1.0&sig=gtV0akNrZOZic_icEBuOWGSzvtcWn8CdMH_IgShHyhY'
+cloud_url = 'url_goes_here'
 headers = {'Content-Type': 'application/json'}
 # http request body below must be wrapped in ''' to avoid error for invalid characters like the comma
 # modify the email and duration as needed
-body = '''{'email':'joel_ginsberg@trendmicro.com','duration':240}'''
+body = '''{'email':'your_email@domain.com','duration':240}'''
 
 # make HTTP request and store response in r
 r = requests.post(cloud_url, headers=headers, data=body)
@@ -103,7 +103,9 @@ for x, y in zip(input[0::2], input[1::2]):
     # format list with human readable day of the week, month/day, and times plus time zone
     # dt.strftime("%m/%d %I:%M%p %Z")
     # I hard-coded CST instead of printing the timezone with %Z because the datetime objects returned from the cloud flow do not have a timezone value.
-    #output.append(a.strftime("%m/%d:").lstrip('0').replace('/0', '/') + a.strftime(" %I").replace(' 0', ' ').rjust(3, ' ') + ' - ' + b.strftime("%I CST").lstrip('0'))
-    output.append(a.strftime("%m/%d:").lstrip('0').replace('/0', '/') + a.strftime(" %I %p").replace(' 0', ' ').lower() + ' - ' + b.strftime("%I %p").lstrip('0').lower() + " CST")
+    # To include am/pm use the line below (includes %p). The .lower() changes AM/PM to am/pm
+    #output.append(a.strftime("%m/%d:").lstrip('0').replace('/0', '/') + a.strftime(" %I %p").replace(' 0', ' ').lower() + ' - ' + b.strftime("%I %p").lstrip('0').lower() + " CST")
+
+    output.append(a.strftime("%m/%d:").lstrip('0').replace('/0', '/') + a.strftime(" %I").replace(' 0', ' ') + ' - ' + b.strftime("%I").lstrip('0') + " CST")
 
 print('\n'.join(output))
